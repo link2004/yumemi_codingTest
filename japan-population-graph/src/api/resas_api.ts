@@ -1,5 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config();
+console.log(dotenv.config());
+
 const BASE_URL = 'https://opendata.resas-portal.go.jp';
 const API_KEY = process.env.RESAS_API_KEY;
+
 if (API_KEY === undefined) {
   throw new Error('RESAS_API_KEYが設定されていません。');
 }
