@@ -28,21 +28,23 @@ function App(): JSX.Element {
     };
     void fetchData();
   }, [selectedPrefectures]);
+
   return (
-    <div>
-      <p>React App</p>
-      <span>selected Prefectures:</span>
-      {selectedPrefectures.map((p) => (
-        <span key={p.prefCode}>{p.prefName},</span>
-      ))}
-      {prefecturePopulations != null && (
-        <PopulationGraph prefecturePopulations={prefecturePopulations} prefectures={prefectures} />
-      )}
-      <PrefectureCheckBoxList
-        prefectures={prefectures}
-        selectedPrefectures={selectedPrefectures}
-        setSelectedPrefectures={setSelectedPrefectures}
-      />
+    <div className="App">
+      <header>
+        <h1>都道府県別の総人口推移グラフ</h1>
+      </header>
+      <div className="container">
+        {prefecturePopulations != null && (
+          <PopulationGraph prefecturePopulations={prefecturePopulations} prefectures={prefectures} />
+        )}
+        {/* <span>選択：{selectedPrefectures.map((p) => p.prefName).join(', ')}</span> */}
+        <PrefectureCheckBoxList
+          prefectures={prefectures}
+          selectedPrefectures={selectedPrefectures}
+          setSelectedPrefectures={setSelectedPrefectures}
+        />
+      </div>
     </div>
   );
 }

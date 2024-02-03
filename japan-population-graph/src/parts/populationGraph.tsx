@@ -16,7 +16,7 @@ const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ prefecturePopulat
   };
   const populationOptions = prefecturePopulations[0].populationResponse.result.data.map((item, index) => item.label);
   return (
-    <div>
+    <div className="chart-container">
       <select value={selectedOption} onChange={handleOptionChange}>
         {populationOptions.map((label, index) => (
           <option key={index} value={label}>
