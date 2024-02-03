@@ -23,8 +23,13 @@ export interface PopulationResponse {
   };
 }
 
+export interface PrefecturePopulation {
+  prefCode: number;
+  populationResponse: PopulationResponse;
+}
+
 // 都道府県の人口構成を取得する
-export const fetchPrefecturePopulation = async (prefCode: number): Promise<PopulationResponse> => {
+export const fetchPrefecturePopulation = async (prefCode: number): Promise<PrefecturePopulation> => {
   try {
     const response = await fetch(`${BASE_URL}/api/v1/population/composition/perYear?cityCode=-&prefCode=${prefCode}`, {
       headers: {
@@ -36,9 +41,19 @@ export const fetchPrefecturePopulation = async (prefCode: number): Promise<Popul
       throw new Error(`HTTP status ${response.status}`);
     }
 
-    const data = (await response.json()) as PopulationResponse;
+    const populationResponse = (await response.json()) as PopulationResponse;
+    const data: PrefecturePopulation = {
+      prefCode,
+      populationResponse,
+    };
     return data;
   } catch (error) {
     throw new Error(`データの取得に失敗しました。${String(error)}`);
   }
+};
+
+// 複数の都道府県の人口構成を取得する
+export const fetchPrefecturePopulations = async (prefCodes: number[]): Promise<PrefecturePopulation[]> => {
+  const promises = prefCodes.map(async (prefCode) => await fetchPrefecturePopulation(prefCode));
+  return await Promise.all(promises);
 };

@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { fetchPrefectures } from './api/fetchPrefectures';
 import { fetchPrefecturePopulation, type PopulationResponse } from './api/fetchPrefecturesPopulation';
+import { fetchPrefecturePopulations } from './api/fetchPrefecturesPopulation';
 import PopulationGraph from './parts/populationGraph';
 import App from './App';
 test('fetchPrefectures', async () => {
@@ -8,7 +9,28 @@ test('fetchPrefectures', async () => {
 });
 
 test('fetchPrefecturePopulation', async () => {
-  await expect(fetchPrefecturePopulation(1)).resolves.toBeDefined();
+  const result = await fetchPrefecturePopulation(1);
+  // resultがundefinedでないことを確認
+  expect(result).toBeDefined();
+  expect(result.prefCode).toBe(1);
+  expect(result.populationResponse).toBeDefined();
+  expect(result.populationResponse.result).toBeDefined();
+  expect(result.populationResponse.result.boundaryYear).toBeDefined();
+  expect(result.populationResponse.result.data).toBeDefined();
+  expect(result.populationResponse.result.data[0].label).toBeDefined();
+  expect(result.populationResponse.result.data[0].data).toBeDefined();
+  expect(result.populationResponse.result.data[0].data[0].year).toBeDefined();
+  expect(result.populationResponse.result.data[0].data[0].value).toBeDefined();
+});
+
+test('fetchPrefecturePopulations', async () => {
+  const result = await fetchPrefecturePopulations([1, 2]);
+  expect(result).toBeDefined();
+  expect(result.length).toBe(2);
+  expect(result[0].prefCode).toBe(1);
+  expect(result[1].prefCode).toBe(2);
+  expect(result[0].populationResponse).toBeDefined();
+  expect(result[1].populationResponse).toBeDefined();
 });
 
 test('Appが表示されるか', () => {
