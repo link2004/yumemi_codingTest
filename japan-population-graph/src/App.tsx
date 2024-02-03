@@ -8,13 +8,16 @@ function App(): JSX.Element {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selectedPrefectures, setSelectedPrefectures] = useState<Prefecture[]>([]);
   const [prefecturePopulation, setPrefecturePopulation] = useState<PrefecturePopulation>();
+  const [prefecturePopulation2, setPrefecturePopulation2] = useState<PrefecturePopulation>();
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       const prefectures = await fetchPrefectures();
       setPrefectures(prefectures.result);
       const _prefecturePopulation = await fetchPrefecturePopulation(1);
+      const _prefecturePopulation2 = await fetchPrefecturePopulation(2);
       setPrefecturePopulation(_prefecturePopulation);
+      setPrefecturePopulation2(_prefecturePopulation2);
     };
     void fetchData();
   }, []);
@@ -25,8 +28,8 @@ function App(): JSX.Element {
       {selectedPrefectures.map((p) => (
         <span key={p.prefCode}>{p.prefName},</span>
       ))}
-      {prefecturePopulation != null && (
-        <PopulationGraph populationData={prefecturePopulation.populationResponse.result} />
+      {prefecturePopulation != null && prefecturePopulation2 != null && (
+        <PopulationGraph prefecturePopulations={[prefecturePopulation, prefecturePopulation2]} />
       )}
       <PrefectureCheckBoxList
         prefectures={prefectures}
