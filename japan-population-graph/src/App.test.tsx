@@ -8,7 +8,18 @@ test('fetchPrefectures', async () => {
 });
 
 test('fetchPrefecturePopulation', async () => {
-  await expect(fetchPrefecturePopulation(1)).resolves.toBeDefined();
+  const result = await fetchPrefecturePopulation(1);
+  // resultがundefinedでないことを確認
+  expect(result).toBeDefined();
+  expect(result.prefCode).toBe(1);
+  expect(result.populationResponse).toBeDefined();
+  expect(result.populationResponse.result).toBeDefined();
+  expect(result.populationResponse.result.boundaryYear).toBeDefined();
+  expect(result.populationResponse.result.data).toBeDefined();
+  expect(result.populationResponse.result.data[0].label).toBeDefined();
+  expect(result.populationResponse.result.data[0].data).toBeDefined();
+  expect(result.populationResponse.result.data[0].data[0].year).toBeDefined();
+  expect(result.populationResponse.result.data[0].data[0].value).toBeDefined();
 });
 
 test('Appが表示されるか', () => {
