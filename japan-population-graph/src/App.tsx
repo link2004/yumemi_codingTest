@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { fetchPrefectures, type Prefecture } from './api/fetchPrefectures';
-import PrefectureList from './parts/prefectureList';
+import PrefectureList from './parts/prefectureCheckBoxList';
 
 function App(): JSX.Element {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
