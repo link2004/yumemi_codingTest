@@ -5,6 +5,7 @@ import PrefectureList from './parts/prefectureList';
 
 function App(): JSX.Element {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
+  const [selectedPrefectures, setSelectedPrefectures] = useState<Prefecture[]>([]);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -16,7 +17,15 @@ function App(): JSX.Element {
   return (
     <div>
       <p>React App</p>
-      <PrefectureList Prefectures={prefectures} />
+      <span>selected Prefectures:</span>
+      {selectedPrefectures.map((p) => (
+        <span key={p.prefCode}>{p.prefName},</span>
+      ))}
+      <PrefectureList
+        prefectures={prefectures}
+        selectedPrefectures={selectedPrefectures}
+        setSelectedPrefectures={setSelectedPrefectures}
+      />
     </div>
   );
 }
