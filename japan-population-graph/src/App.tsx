@@ -7,14 +7,14 @@ import PopulationGraph from './parts/populationGraph';
 function App(): JSX.Element {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selectedPrefectures, setSelectedPrefectures] = useState<Prefecture[]>([]);
-  const [populationData, setPopulationData] = useState<PopulationResponse>();
+  const [populationData, setPopulationData] = useState<PopulationResponse['result']>();
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       const prefectures = await fetchPrefectures();
       setPrefectures(prefectures.result);
       const populationData = await fetchPrefecturePopulation(1);
-      setPopulationData(populationData);
+      setPopulationData(populationData.result);
     };
     void fetchData();
   }, []);
