@@ -51,3 +51,9 @@ export const fetchPrefecturePopulation = async (prefCode: number): Promise<Prefe
     throw new Error(`データの取得に失敗しました。${String(error)}`);
   }
 };
+
+// 複数の都道府県の人口構成を取得する
+export const fetchPrefecturePopulations = async (prefCodes: number[]): Promise<PrefecturePopulation[]> => {
+  const promises = prefCodes.map(async (prefCode) => await fetchPrefecturePopulation(prefCode));
+  return await Promise.all(promises);
+};
