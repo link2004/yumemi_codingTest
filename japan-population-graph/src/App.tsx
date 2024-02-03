@@ -1,16 +1,20 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { fetchPrefectures, type Prefecture } from './api/fetchPrefectures';
-import PrefectureList from './parts/prefectureList';
-
+import { fetchPrefecturePopulation, type PopulationResponse } from './api/fetchPrefecturesPopulation';
+import PrefectureCheckBoxList from './parts/prefectureCheckBoxList';
+import PopulationGraph from './parts/populationGraph';
 function App(): JSX.Element {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selectedPrefectures, setSelectedPrefectures] = useState<Prefecture[]>([]);
+  const [populationData, setPopulationData] = useState<PopulationResponse['result']>();
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      const data = await fetchPrefectures();
-      setPrefectures(data.result);
+      const prefectures = await fetchPrefectures();
+      setPrefectures(prefectures.result);
+      const populationData = await fetchPrefecturePopulation(1);
+      setPopulationData(populationData.result);
     };
     void fetchData();
   }, []);
@@ -21,7 +25,8 @@ function App(): JSX.Element {
       {selectedPrefectures.map((p) => (
         <span key={p.prefCode}>{p.prefName},</span>
       ))}
-      <PrefectureList
+      {populationData != null && <PopulationGraph populationData={populationData} />}
+      <PrefectureCheckBoxList
         prefectures={prefectures}
         selectedPrefectures={selectedPrefectures}
         setSelectedPrefectures={setSelectedPrefectures}
