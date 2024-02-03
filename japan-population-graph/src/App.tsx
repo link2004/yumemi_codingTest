@@ -1,26 +1,33 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { fetchPrefectures, type Prefecture } from './api/fetchPrefectures';
-import { fetchPrefecturePopulation, type PrefecturePopulation } from './api/fetchPrefecturesPopulation';
+import { fetchPrefecturePopulations, type PrefecturePopulation } from './api/fetchPrefecturesPopulation';
 import PrefectureCheckBoxList from './parts/prefectureCheckBoxList';
 import PopulationGraph from './parts/populationGraph';
 function App(): JSX.Element {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selectedPrefectures, setSelectedPrefectures] = useState<Prefecture[]>([]);
-  const [prefecturePopulation, setPrefecturePopulation] = useState<PrefecturePopulation>();
-  const [prefecturePopulation2, setPrefecturePopulation2] = useState<PrefecturePopulation>();
+  const [prefecturePopulations, setPrefecturePopulations] = useState<PrefecturePopulation[]>();
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       const prefectures = await fetchPrefectures();
       setPrefectures(prefectures.result);
-      const _prefecturePopulation = await fetchPrefecturePopulation(1);
-      const _prefecturePopulation2 = await fetchPrefecturePopulation(2);
-      setPrefecturePopulation(_prefecturePopulation);
-      setPrefecturePopulation2(_prefecturePopulation2);
     };
     void fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      if (selectedPrefectures.length === 0) {
+        return;
+      }
+      const selectedPrefecturesCodes = selectedPrefectures.map((p) => p.prefCode);
+      const prefecturePopulations = await fetchPrefecturePopulations(selectedPrefecturesCodes);
+      setPrefecturePopulations(prefecturePopulations);
+    };
+    void fetchData();
+  }, [selectedPrefectures]);
   return (
     <div>
       <p>React App</p>
@@ -28,11 +35,8 @@ function App(): JSX.Element {
       {selectedPrefectures.map((p) => (
         <span key={p.prefCode}>{p.prefName},</span>
       ))}
-      {prefecturePopulation != null && prefecturePopulation2 != null && (
-        <PopulationGraph
-          prefecturePopulations={[prefecturePopulation, prefecturePopulation2]}
-          prefectures={prefectures}
-        />
+      {prefecturePopulations != null && (
+        <PopulationGraph prefecturePopulations={prefecturePopulations} prefectures={prefectures} />
       )}
       <PrefectureCheckBoxList
         prefectures={prefectures}
