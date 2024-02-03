@@ -29,3 +29,12 @@ export const fetchPrefectures = async (): Promise<PrefecturesResponse> => {
     throw new Error(`データの取得に失敗しました。${String(error)}`);
   }
 };
+
+// 都道府県コードから都道府県の名前を取得する関数
+export const getPrefectureName = (prefCode: number, prefectures: Prefecture[]): string => {
+  const prefecture = prefectures.find((prefecture) => prefecture.prefCode === prefCode);
+  if (prefecture === undefined) {
+    throw new Error('都道府県が見つかりませんでした。');
+  }
+  return prefecture.prefName;
+};
