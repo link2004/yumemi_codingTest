@@ -15,7 +15,7 @@ interface PopulationDataSet {
   data: PopulationDataPoint[];
 }
 
-interface PopulationResponse {
+export interface PopulationResponse {
   message: null | string;
   result: {
     boundaryYear: number;
@@ -24,17 +24,18 @@ interface PopulationResponse {
 }
 
 // 都道府県の人口構成を取得する
-export const fetchPrefectures = async (_prefCode: number): Promise<PopulationResponse> => {
+export const fetchPrefecturePopulation = async (prefCode: number): Promise<PopulationResponse> => {
   try {
-    const response = await fetch(`${BASE_URL}api/v1/population/composition/perYear`, {
+    const response = await fetch(`${BASE_URL}/api/v1/population/composition/perYear?cityCode=-&prefCode=${prefCode}`, {
       headers: {
         'X-API-KEY': API_KEY,
       },
-      body: JSON.stringify({
-        prefCode: _prefCode,
-        cityCode: '-', // 都道府県の場合は'-'を指定
-      }),
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP status ${response.status}`);
+    }
+
     const data = (await response.json()) as PopulationResponse;
     return data;
   } catch (error) {
