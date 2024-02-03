@@ -40,7 +40,11 @@ test('Appが表示されるか', () => {
 });
 
 test('PopulationGraphが表示されるか', () => {
-  const mockData: PrefecturePopulation[] = [
+  const mockPrefectures = [
+    { prefCode: 1, prefName: '北海道' },
+    { prefCode: 2, prefName: '青森県' },
+  ];
+  const mockPopulations: PrefecturePopulation[] = [
     {
       prefCode: 1,
       populationResponse: {
@@ -83,7 +87,7 @@ test('PopulationGraphが表示されるか', () => {
     },
   ];
 
-  render(<PopulationGraph prefecturePopulations={mockData} />);
+  render(<PopulationGraph prefecturePopulations={mockPopulations} prefectures={mockPrefectures} />);
 
   // HighchartsReactが表示されているか
   const highchartsElement = screen.getByTestId('highcharts-container');

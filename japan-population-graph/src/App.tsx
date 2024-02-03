@@ -29,7 +29,10 @@ function App(): JSX.Element {
         <span key={p.prefCode}>{p.prefName},</span>
       ))}
       {prefecturePopulation != null && prefecturePopulation2 != null && (
-        <PopulationGraph prefecturePopulations={[prefecturePopulation, prefecturePopulation2]} />
+        <PopulationGraph
+          prefecturePopulations={[prefecturePopulation, prefecturePopulation2]}
+          prefectures={prefectures}
+        />
       )}
       <PrefectureCheckBoxList
         prefectures={prefectures}

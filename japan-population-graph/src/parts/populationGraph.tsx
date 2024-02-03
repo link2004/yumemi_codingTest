@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { type PrefecturePopulation } from '../api/fetchPrefecturesPopulation';
+import { getPrefectureName, type Prefecture } from '../api/fetchPrefectures';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 interface PopulationDisplayProps {
   prefecturePopulations: PrefecturePopulation[];
+  prefectures: Prefecture[];
 }
 
-const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ prefecturePopulations }) => {
+const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ prefecturePopulations, prefectures }) => {
   const [selectedOption, setSelectedOption] = useState<string>('総人口');
   const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     setSelectedOption(event.target.value);
@@ -46,8 +48,9 @@ const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ prefecturePopulat
             if (data === undefined) {
               throw new Error('data is undefined');
             }
+            const prefectureName = getPrefectureName(prefecturePopulation.prefCode, prefectures);
             return {
-              name: prefecturePopulation.prefCode.toString(),
+              name: prefectureName,
               data: data.data.map((item) => [item.year, item.value]),
             };
           }),
