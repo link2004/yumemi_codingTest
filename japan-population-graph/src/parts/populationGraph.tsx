@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { type PopulationResponse } from '../api/fetchPrefecturesPopulation';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -8,13 +8,24 @@ interface PopulationDisplayProps {
 }
 
 const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ populationData }) => {
+  const [selectedOption, setSelectedOption] = useState<string>('総人口');
+  const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    setSelectedOption(event.target.value);
+  };
   return (
     <div>
+      <select value={selectedOption} onChange={handleOptionChange}>
+        {populationData.data.map((item, index) => (
+          <option key={index} value={item.label}>
+            {item.label}
+          </option>
+        ))}
+      </select>
       <HighchartsReact
         highcharts={Highcharts}
         options={{
           title: {
-            text: 'Population Data',
+            text: selectedOption,
           },
           xAxis: {
             title: {
@@ -26,10 +37,12 @@ const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ populationData })
               text: 'Population',
             },
           },
-          series: populationData.data.map((item) => ({
-            name: item.label,
-            data: item.data.map((yearData) => [yearData.year, yearData.value]),
-          })),
+          series: populationData.data
+            .filter((item) => item.label === selectedOption)
+            .map((item) => ({
+              name: item.label,
+              data: item.data.map((yearData) => [yearData.year, yearData.value]),
+            })),
         }}
       />
     </div>
