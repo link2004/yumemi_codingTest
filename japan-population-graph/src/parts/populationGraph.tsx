@@ -1,5 +1,7 @@
 import React from 'react';
 import { type PopulationResponse } from '../api/fetchPrefecturesPopulation';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 
 interface PopulationDisplayProps {
   populationData: PopulationResponse['result'];
@@ -8,18 +10,28 @@ interface PopulationDisplayProps {
 const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ populationData }) => {
   return (
     <div>
-      <h2>Population Data</h2>
-      <p>Boundary Year: {populationData.boundaryYear}</p>
-      {populationData.data.map((item, index) => (
-        <div key={index}>
-          <h3>{item.label}</h3>
-          {item.data.map((yearData, i) => (
-            <p key={i}>
-              Year: {yearData.year}, Value: {yearData.value}
-            </p>
-          ))}
-        </div>
-      ))}
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={{
+          title: {
+            text: 'Population Data',
+          },
+          xAxis: {
+            title: {
+              text: 'Year',
+            },
+          },
+          yAxis: {
+            title: {
+              text: 'Population',
+            },
+          },
+          series: populationData.data.map((item) => ({
+            name: item.label,
+            data: item.data.map((yearData) => [yearData.year, yearData.value]),
+          })),
+        }}
+      />
     </div>
   );
 };
