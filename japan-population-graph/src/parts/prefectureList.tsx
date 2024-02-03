@@ -1,5 +1,5 @@
 import React from 'react';
-import { type Prefecture } from '../api/resas_api';
+import { type Prefecture } from '../api/fetchPrefectures';
 
 interface PrefectureListProps {
   prefectures: Prefecture[];

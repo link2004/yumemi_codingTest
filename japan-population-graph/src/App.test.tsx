@@ -3,7 +3,7 @@
 // import React from 'react';
 // import { render, screen } from '@testing-library/react';
 // import App from './App';
-import { fetchPrefectures } from './api/resas_api';
+import { fetchPrefectures } from './api/fetchPrefectures';
 import fetchMock from 'jest-fetch-mock';
 
 fetchMock.enableMocks();

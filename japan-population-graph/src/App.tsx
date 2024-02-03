@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { fetchPrefectures, type Prefecture } from './api/resas_api';
+import { fetchPrefectures, type Prefecture } from './api/fetchPrefectures';
 import PrefectureList from './parts/prefectureList';
 
 function App(): JSX.Element {
