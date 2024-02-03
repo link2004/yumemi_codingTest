@@ -23,6 +23,7 @@ const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ populationData })
       </select>
       <HighchartsReact
         highcharts={Highcharts}
+        containerProps={{ 'data-testid': 'highcharts-container' }}
         options={{
           title: {
             text: selectedOption,

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { fetchPrefectures } from './api/fetchPrefectures';
 import { fetchPrefecturePopulation, type PopulationResponse } from './api/fetchPrefecturesPopulation';
-import PopulationDisplay from './parts/populationGraph';
-
+import PopulationGraph from './parts/populationGraph';
+import App from './App';
 test('fetchPrefectures', async () => {
   await expect(fetchPrefectures()).resolves.toBeDefined();
 });
@@ -11,7 +11,13 @@ test('fetchPrefecturePopulation', async () => {
   await expect(fetchPrefecturePopulation(1)).resolves.toBeDefined();
 });
 
-test('renders PopulationDisplay component with data', () => {
+test('Appが表示されるか', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/React App/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+test('PopulationGraphが表示されるか', () => {
   const mockData: PopulationResponse['result'] = {
     boundaryYear: 2020,
     data: [
@@ -23,15 +29,13 @@ test('renders PopulationDisplay component with data', () => {
           { year: 1990, value: 12571 },
         ],
       },
+      { label: '年少人口', data: [] },
     ],
   };
 
-  render(<PopulationDisplay populationData={mockData} />);
+  render(<PopulationGraph populationData={mockData} />);
 
-  expect(screen.getByText('Population Data')).toBeInTheDocument();
-  expect(screen.getByText('Boundary Year: 2020')).toBeInTheDocument();
-  expect(screen.getByText('総人口')).toBeInTheDocument();
-  expect(screen.getByText('Year: 1980, Value: 12817')).toBeInTheDocument();
-  expect(screen.getByText('Year: 1985, Value: 12707')).toBeInTheDocument();
-  expect(screen.getByText('Year: 1990, Value: 12571')).toBeInTheDocument();
+  // HighchartsReactが表示されているか
+  const highchartsElement = screen.getByTestId('highcharts-container');
+  expect(highchartsElement).toBeInTheDocument();
 });
