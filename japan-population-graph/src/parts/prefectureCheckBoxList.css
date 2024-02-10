@@ -2,7 +2,6 @@
 	list-style: none;
 	display:flex;
 	flex-flow: wrap;
-	align-content: space-around;
 }
 .prefectureItem {
 	width: 6rem;
