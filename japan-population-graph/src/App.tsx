@@ -8,11 +8,16 @@ function App(): JSX.Element {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selectedPrefectures, setSelectedPrefectures] = useState<Prefecture[]>([]);
   const [prefecturePopulations, setPrefecturePopulations] = useState<PrefecturePopulation[]>();
-
+  const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      const prefectures = await fetchPrefectures();
-      setPrefectures(prefectures.result);
+      try {
+        const prefectures = await fetchPrefectures();
+        setPrefectures(prefectures.result);
+        setError(null);
+      } catch (err) {
+        setError(String(err));
+      }
     };
     void fetchData();
   }, []);
@@ -23,8 +28,13 @@ function App(): JSX.Element {
         return;
       }
       const selectedPrefecturesCodes = selectedPrefectures.map((p) => p.prefCode);
-      const prefecturePopulations = await fetchPrefecturePopulations(selectedPrefecturesCodes);
-      setPrefecturePopulations(prefecturePopulations);
+      try {
+        const prefecturePopulations = await fetchPrefecturePopulations(selectedPrefecturesCodes);
+        setPrefecturePopulations(prefecturePopulations);
+        setError(null);
+      } catch (err) {
+        setError(String(err));
+      }
     };
     void fetchData();
   }, [selectedPrefectures]);
@@ -34,6 +44,7 @@ function App(): JSX.Element {
       <header>
         <h1>都道府県別の総人口推移グラフ</h1>
       </header>
+      {error != null && <div className="error-message">{error}</div>}
       <main>
         <div className="margin-bottom-20">
           {prefecturePopulations != null && (
