@@ -1,0 +1,31 @@
+.graph-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.graph-content {
+    width: 100%;
+    padding: 0 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+select {
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    &:hover {
+        cursor: pointer;
+        outline: 2px solid #ccc;
+    }
+    &:focus {
+        outline: 2px solid #ccc;
+    }
+}

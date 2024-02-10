@@ -1,3 +1,4 @@
+import './populationGraph.css';
 import React, { useState } from 'react';
 import { type PrefecturePopulation } from '../api/fetchPrefecturesPopulation';
 import { getPrefectureName, type Prefecture } from '../api/fetchPrefectures';
@@ -16,46 +17,48 @@ const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ prefecturePopulat
   };
   const populationOptions = prefecturePopulations[0].populationResponse.result.data.map((item, index) => item.label);
   return (
-    <div className="chart-container">
-      <select value={selectedOption} onChange={handleOptionChange}>
-        {populationOptions.map((label, index) => (
-          <option key={index} value={label}>
-            {label}
-          </option>
-        ))}
-      </select>
-      <HighchartsReact
-        highcharts={Highcharts}
-        containerProps={{ 'data-testid': 'highcharts-container' }}
-        options={{
-          title: {
-            text: selectedOption,
-          },
-          xAxis: {
+    <div className="graph-container">
+      <div className="graph-content">
+        <select value={selectedOption} onChange={handleOptionChange}>
+          {populationOptions.map((label, index) => (
+            <option key={index} value={label}>
+              {label}
+            </option>
+          ))}
+        </select>
+        <HighchartsReact
+          highcharts={Highcharts}
+          containerProps={{ 'data-testid': 'highcharts-container' }}
+          options={{
             title: {
-              text: 'Year',
+              text: selectedOption,
             },
-          },
-          yAxis: {
-            title: {
-              text: 'Population',
+            xAxis: {
+              title: {
+                text: 'Year',
+              },
             },
-          },
-          series: prefecturePopulations.map((prefecturePopulation) => {
-            const data = prefecturePopulation.populationResponse.result.data.find(
-              (item) => item.label === selectedOption,
-            );
-            if (data === undefined) {
-              throw new Error('data is undefined');
-            }
-            const prefectureName = getPrefectureName(prefecturePopulation.prefCode, prefectures);
-            return {
-              name: prefectureName,
-              data: data.data.map((item) => [item.year, item.value]),
-            };
-          }),
-        }}
-      />
+            yAxis: {
+              title: {
+                text: 'Population',
+              },
+            },
+            series: prefecturePopulations.map((prefecturePopulation) => {
+              const data = prefecturePopulation.populationResponse.result.data.find(
+                (item) => item.label === selectedOption,
+              );
+              if (data === undefined) {
+                throw new Error('data is undefined');
+              }
+              const prefectureName = getPrefectureName(prefecturePopulation.prefCode, prefectures);
+              return {
+                name: prefectureName,
+                data: data.data.map((item) => [item.year, item.value]),
+              };
+            }),
+          }}
+        />
+      </div>
     </div>
   );
 };
