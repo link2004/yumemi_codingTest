@@ -19,13 +19,15 @@ const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ prefecturePopulat
   return (
     <div className="graph-container">
       <div className="graph-content">
-        <select value={selectedOption} onChange={handleOptionChange}>
-          {populationOptions.map((label, index) => (
-            <option key={index} value={label}>
-              {label}
-            </option>
-          ))}
-        </select>
+        <div className="select-container">
+          <select value={selectedOption} onChange={handleOptionChange}>
+            {populationOptions.map((label, index) => (
+              <option key={index} value={label}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </div>
         <HighchartsReact
           highcharts={Highcharts}
           containerProps={{ 'data-testid': 'highcharts-container' }}
