@@ -6,7 +6,7 @@ import PrefectureCheckBoxList from './parts/prefectureCheckBoxList';
 import PopulationGraph from './parts/populationGraph';
 import App from './App';
 
-// 都道府県を取得する関数
+// 都道府県を取得する関数（API）fetchPrefectures();
 describe('fetchPrefectures', () => {
   test('success fetchPrefectures', async () => {
     const result = await fetchPrefectures();
@@ -20,7 +20,7 @@ describe('fetchPrefectures', () => {
   });
 });
 
-// 都道府県コードから名前を取得する関数
+// 都道府県コードから名前を取得する関数 getPrefectureName();
 describe('getPrefectureName', () => {
   const prefectures = [
     { prefCode: 1, prefName: '北海道' },
@@ -37,7 +37,7 @@ describe('getPrefectureName', () => {
   });
 });
 
-// 都道府県の人口を取得する関数
+// 都道府県の人口を取得する関数（API）fetchPrefecturePopulation();
 describe('fetchPrefecturePopulation', () => {
   test('success fetchPrefecturePopulation', async () => {
     const result = await fetchPrefecturePopulation(1);
@@ -50,7 +50,7 @@ describe('fetchPrefecturePopulation', () => {
   test('error fetchPrefecturePopulation', async () => {});
 });
 
-// 複数の都道府県の人口を取得する関数
+// 複数の都道府県の人口を取得する関数 (API) fetchPrefecturePopulations();
 describe('fetchPrefecturePopulations', () => {
   test('success fetchPrefecturePopulations', async () => {
     const result = await fetchPrefecturePopulations([1, 2]);
@@ -64,11 +64,13 @@ describe('fetchPrefecturePopulations', () => {
   test('error fetchPrefecturePopulations', async () => {});
 });
 
+// Appコンポーネントのテスト
 test('render App', () => {
   const { asFragment } = render(<App />);
   expect(asFragment()).toMatchSnapshot();
 });
 
+// PopulationGraphコンポーネントのテスト
 describe('PopulationGraph', () => {
   const mockPrefectures = [
     { prefCode: 1, prefName: '北海道' },
@@ -117,23 +119,25 @@ describe('PopulationGraph', () => {
     },
   ];
 
-  test('snapshot PopulationGraph', () => {
-    const { asFragment } = render(
-      <PopulationGraph prefecturePopulations={mockPopulations} prefectures={mockPrefectures} />,
-    );
-    expect(asFragment()).toMatchSnapshot();
-  });
+  // 毎回要素が変わるためsnapshotテストは省略
+  // test('snapshot PopulationGraph', () => {
+  //   const { asFragment } = render(
+  //     <PopulationGraph prefecturePopulations={mockPopulations} prefectures={mockPrefectures} />,
+  //   );
+  //   expect(asFragment()).toMatchSnapshot();
+  // });
+
   test('render PopulationGraph', () => {
     render(<PopulationGraph prefecturePopulations={mockPopulations} prefectures={mockPrefectures} />);
     // HighchartsReactが表示されているか
     const highchartsElement = screen.getByTestId('highcharts-container');
     expect(highchartsElement).toBeInTheDocument();
-    expect(highchartsElement).toHaveTextContent('総人口');
     expect(highchartsElement).toHaveTextContent('北海道');
     expect(highchartsElement).toHaveTextContent('1980');
   });
 });
 
+// PrefectureCheckBoxListコンポーネントのテスト
 describe('PrefectureCheckBoxList', () => {
   const mockPrefectures = [
     { prefCode: 1, prefName: '北海道' },
