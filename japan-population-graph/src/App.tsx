@@ -34,17 +34,16 @@ function App(): JSX.Element {
       <header>
         <h1>都道府県別の総人口推移グラフ</h1>
       </header>
-      <div className="container">
+      <main>
         {prefecturePopulations != null && (
           <PopulationGraph prefecturePopulations={prefecturePopulations} prefectures={prefectures} />
         )}
-        {/* <span>選択：{selectedPrefectures.map((p) => p.prefName).join(', ')}</span> */}
         <PrefectureCheckBoxList
           prefectures={prefectures}
           selectedPrefectures={selectedPrefectures}
           setSelectedPrefectures={setSelectedPrefectures}
         />
-      </div>
+      </main>
     </div>
   );
 }

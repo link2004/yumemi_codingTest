@@ -1,43 +1,11 @@
-.App {
-  text-align: center;
-}
-
 header {
     background-color: #282c34;
-    min-height: 20vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
     color: white;
+    overflow: hidden;
+    text-align: center;
 }
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: black;
-    margin: 10%;
-}
-
-.chart-container {
-    width: 100%;
-    margin: 20px;
-}
-
-.prefectureList {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
-}
-.prefectureItem {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  width: 8rem;
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
 }
