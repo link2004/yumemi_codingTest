@@ -42,7 +42,7 @@ const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ prefecturePopulat
             },
             yAxis: {
               title: {
-                text: '人口',
+                text: '人口（万人）',
               },
             },
             series: prefecturePopulations.map((prefecturePopulation) => {
@@ -55,7 +55,7 @@ const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ prefecturePopulat
               const prefectureName = getPrefectureName(prefecturePopulation.prefCode, prefectures);
               return {
                 name: prefectureName,
-                data: data.data.map((item) => [item.year, item.value]),
+                data: data.data.map((item) => [item.year, item.value / 10000]),
               };
             }),
           }}
