@@ -80,6 +80,7 @@ describe('PopulationGraph', () => {
     {
       prefCode: 1,
       populationResponse: {
+        statusCode: '200',
         message: '',
         result: {
           boundaryYear: 2020,
@@ -100,6 +101,7 @@ describe('PopulationGraph', () => {
     {
       prefCode: 2,
       populationResponse: {
+        statusCode: '200',
         message: '',
         result: {
           boundaryYear: 2020,

@@ -11,6 +11,7 @@ export interface Prefecture {
 }
 
 interface PrefecturesResponse {
+  statusCode: string;
   message: string;
   result: Prefecture[];
 }
@@ -21,9 +22,16 @@ export const fetchPrefectures = async (): Promise<PrefecturesResponse> => {
     const response = await fetch(`${BASE_URL}/api/v1/prefectures`, {
       headers: {
         'X-API-KEY': API_KEY,
+        // 'X-API-KEY': '',
       },
     });
     const data = (await response.json()) as PrefecturesResponse;
+    // data.statusCode = '400';
+    if (data.statusCode === '403') {
+      throw new Error('APIキーが無効です。');
+    } else if (data.statusCode >= '400') {
+      throw new Error(`${data.statusCode}: ${data.message}`);
+    }
     return data;
   } catch (error) {
     throw new Error(`データの取得に失敗しました。${String(error)}`);
