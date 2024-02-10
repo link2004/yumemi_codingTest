@@ -16,6 +16,7 @@ interface PopulationDataSet {
 }
 
 export interface PopulationResponse {
+  statusCode: string;
   message: null | string;
   result: {
     boundaryYear: number;
@@ -34,14 +35,17 @@ export const fetchPrefecturePopulation = async (prefCode: number): Promise<Prefe
     const response = await fetch(`${BASE_URL}/api/v1/population/composition/perYear?cityCode=-&prefCode=${prefCode}`, {
       headers: {
         'X-API-KEY': API_KEY,
+        // 'X-API-KEY': '',
       },
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP status ${response.status}`);
+    const populationResponse = (await response.json()) as PopulationResponse;
+    if (populationResponse.statusCode === '403') {
+      throw new Error('APIキーが無効です。');
+    } else if (populationResponse.statusCode >= '400') {
+      throw new Error(`${populationResponse.statusCode}: ${populationResponse.message}`);
     }
 
-    const populationResponse = (await response.json()) as PopulationResponse;
     const data: PrefecturePopulation = {
       prefCode,
       populationResponse,
