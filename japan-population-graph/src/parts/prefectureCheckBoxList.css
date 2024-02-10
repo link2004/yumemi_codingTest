@@ -1,0 +1,19 @@
+.prefectureList {
+	list-style: none;
+	display:flex;
+	flex-flow: wrap;
+	align-content: space-around;
+}
+.prefectureItem {
+	width: 6rem;
+}
+.prefectureItem label {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+.prefectureItem label:hover {
+	cursor: pointer;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
