@@ -1,3 +1,4 @@
+import './prefectureCheckBoxList.css';
 import React from 'react';
 import { type Prefecture } from '../api/fetchPrefectures';
 
@@ -31,20 +32,20 @@ const PrefectureList: React.FC<PrefectureListProps> = (props) => {
   };
 
   return (
-    <ul style={{ listStyleType: 'none' }}>
+    <div className="prefectureList">
       {_prefectures.map(
         (
           prefecture: Prefecture, // Add the type annotation for the prefecture parameter
         ) => (
-          <li key={prefecture.prefCode}>
+          <div key={prefecture.prefCode} className="prefectureItem">
             <label>
               <input type="checkbox" onChange={handleCheckboxChange} value={prefecture.prefCode} />
               {prefecture.prefName}
             </label>
-          </li>
+          </div>
         ),
       )}
-    </ul>
+    </div>
   );
 };
 
