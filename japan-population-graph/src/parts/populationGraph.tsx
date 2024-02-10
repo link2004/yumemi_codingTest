@@ -31,16 +31,16 @@ const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ prefecturePopulat
           containerProps={{ 'data-testid': 'highcharts-container' }}
           options={{
             title: {
-              text: selectedOption,
+              text: '',
             },
             xAxis: {
               title: {
-                text: 'Year',
+                text: '西暦',
               },
             },
             yAxis: {
               title: {
-                text: 'Population',
+                text: '人口',
               },
             },
             series: prefecturePopulations.map((prefecturePopulation) => {
