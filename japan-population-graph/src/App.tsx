@@ -51,11 +51,14 @@ function App(): JSX.Element {
             <PopulationGraph prefecturePopulations={prefecturePopulations} prefectures={prefectures} />
           )}
         </div>
-        <PrefectureCheckBoxList
-          prefectures={prefectures}
-          selectedPrefectures={selectedPrefectures}
-          setSelectedPrefectures={setSelectedPrefectures}
-        />
+        {(prefectures === undefined || prefectures.length === 0) && <div className="loading" />}
+        {!(prefectures === undefined || prefectures.length === 0) && (
+          <PrefectureCheckBoxList
+            prefectures={prefectures}
+            selectedPrefectures={selectedPrefectures}
+            setSelectedPrefectures={setSelectedPrefectures}
+          />
+        )}
       </main>
     </div>
   );
