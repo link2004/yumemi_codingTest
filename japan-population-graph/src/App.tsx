@@ -9,36 +9,47 @@ function App(): JSX.Element {
   const [selectedPrefectures, setSelectedPrefectures] = useState<Prefecture[]>([]);
   const [prefecturePopulations, setPrefecturePopulations] = useState<PrefecturePopulation[]>();
   const [error, setError] = useState<string | null>(null);
+  const updatePrefectures = async (): Promise<void> => {
+    try {
+      const prefectures = await fetchPrefectures();
+      setPrefectures(prefectures.result);
+      setError(null);
+    } catch (err) {
+      setError(String(err));
+    }
+  };
+  const updatePrefecturePopulations = async (): Promise<void> => {
+    if (selectedPrefectures.length === 0) {
+      return;
+    }
+    const selectedPrefecturesCodes = selectedPrefectures.map((p) => p.prefCode);
+    try {
+      const prefecturePopulations = await fetchPrefecturePopulations(selectedPrefecturesCodes);
+      setPrefecturePopulations(prefecturePopulations);
+      setError(null);
+    } catch (err) {
+      setError(String(err));
+    }
+  };
   useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      try {
-        const prefectures = await fetchPrefectures();
-        setPrefectures(prefectures.result);
-        setError(null);
-      } catch (err) {
-        setError(String(err));
-      }
-    };
-    void fetchData();
+    void updatePrefectures();
   }, []);
 
   useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      if (selectedPrefectures.length === 0) {
-        return;
-      }
-      const selectedPrefecturesCodes = selectedPrefectures.map((p) => p.prefCode);
-      try {
-        const prefecturePopulations = await fetchPrefecturePopulations(selectedPrefecturesCodes);
-        setPrefecturePopulations(prefecturePopulations);
-        setError(null);
-      } catch (err) {
-        setError(String(err));
-      }
-    };
-    void fetchData();
+    void updatePrefecturePopulations();
   }, [selectedPrefectures]);
 
+  useEffect(() => {
+    // 初期状態として北海道のグラフを表示
+    const init = async (): Promise<void> => {
+      if (prefectures.length > 0 && selectedPrefectures.length === 0) {
+        setSelectedPrefectures([prefectures[0]]);
+        await updatePrefecturePopulations();
+        setSelectedPrefectures([]);
+      }
+    };
+    void init();
+  }, [prefectures]);
   return (
     <div className="App">
       <header>
