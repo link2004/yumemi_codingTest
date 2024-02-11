@@ -3,6 +3,10 @@
 
 https://thriving-tulumba-552515.netlify.app/
 
+## 開発記録
+
+https://github.com/link2004/yumemi_codingTest/blob/main/%E9%96%8B%E7%99%BA%E8%A8%98%E9%8C%B2.pdf
+
 ## 課題の取り組み開始から完了までに要した合計時間
 
 **18時間半**
