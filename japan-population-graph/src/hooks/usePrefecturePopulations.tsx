@@ -19,6 +19,7 @@ export const usePrefecturePopulations = (selectedPrefectures: Prefecture[], pref
       const selectedPrefecturesCodes = selectedPrefectures.map((p) => p.prefCode);
       const populations = await fetchPrefecturePopulations(selectedPrefecturesCodes);
       setPrefecturePopulations(populations);
+      setError(null);
     } catch (err) {
       setError(String(err));
     }
@@ -30,9 +31,14 @@ export const usePrefecturePopulations = (selectedPrefectures: Prefecture[], pref
   useEffect(() => {
     // 初期状態として北海道のグラフを表示
     const initGraph = async (): Promise<void> => {
-      if (prefectures.length > 0 && selectedPrefectures.length === 0) {
-        const populations = await fetchPrefecturePopulations([prefectures[0].prefCode]);
-        setPrefecturePopulations(populations);
+      try {
+        if (prefectures.length > 0 && selectedPrefectures.length === 0) {
+          const populations = await fetchPrefecturePopulations([prefectures[0].prefCode]);
+          setPrefecturePopulations(populations);
+        }
+        setError(null);
+      } catch (err) {
+        setError(String(err));
       }
     };
     void initGraph();
