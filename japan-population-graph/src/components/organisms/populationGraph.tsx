@@ -1,7 +1,7 @@
 import './populationGraph.css';
 import React, { useState } from 'react';
-import { type PrefecturePopulation } from '../api/fetchPrefecturesPopulation';
-import { getPrefectureName, type Prefecture } from '../api/fetchPrefectures';
+import { type PrefecturePopulation } from '../../api/fetchPrefecturesPopulation';
+import { getPrefectureName, type Prefecture } from '../../api/fetchPrefectures';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
