@@ -2,8 +2,8 @@ import { render, screen, waitForElementToBeRemoved } from '@testing-library/reac
 import { fetchPrefectures, getPrefectureName, type Prefecture } from './api/fetchPrefectures';
 import { fetchPrefecturePopulation, type PrefecturePopulation } from './api/fetchPrefecturesPopulation';
 import { fetchPrefecturePopulations } from './api/fetchPrefecturesPopulation';
-import PrefectureCheckBoxList from './parts/prefectureCheckBoxList';
-import PopulationGraph from './parts/populationGraph';
+import PrefectureCheckBoxList from './components/templetes/prefectureCheckBoxList';
+import PopulationGraph from './components/templetes/populationGraph';
 import App from './App';
 
 // モックの設定

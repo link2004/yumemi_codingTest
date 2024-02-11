@@ -1,9 +1,10 @@
 import './populationGraph.css';
 import React, { useState } from 'react';
-import { type PrefecturePopulation } from '../api/fetchPrefecturesPopulation';
-import { getPrefectureName, type Prefecture } from '../api/fetchPrefectures';
+import { type PrefecturePopulation } from '../../api/fetchPrefecturesPopulation';
+import { getPrefectureName, type Prefecture } from '../../api/fetchPrefectures';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import SelectBox from '../parts/selectbox';
 
 interface PopulationDisplayProps {
   prefecturePopulations: PrefecturePopulation[];
@@ -19,15 +20,11 @@ const PopulationDisplay: React.FC<PopulationDisplayProps> = ({ prefecturePopulat
   return (
     <div className="graph-container">
       <div className="graph-content">
-        <div className="select-container">
-          <select value={selectedOption} onChange={handleOptionChange}>
-            {populationOptions.map((label, index) => (
-              <option key={index} value={label}>
-                {label}
-              </option>
-            ))}
-          </select>
-        </div>
+        <SelectBox
+          selectedOption={selectedOption}
+          Options={populationOptions}
+          handleOptionChange={handleOptionChange}
+        />
         <HighchartsReact
           highcharts={Highcharts}
           containerProps={{ 'data-testid': 'highcharts-container' }}
