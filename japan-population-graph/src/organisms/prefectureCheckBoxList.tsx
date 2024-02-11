@@ -1,7 +1,7 @@
 import './prefectureCheckBoxList.css';
 import React from 'react';
 import { type Prefecture } from '../api/fetchPrefectures';
-import Checkbox from '../parts/checkbox';
+import Checkbox from '../atoms/checkbox';
 
 interface PrefectureListProps {
   prefectures: Prefecture[];
