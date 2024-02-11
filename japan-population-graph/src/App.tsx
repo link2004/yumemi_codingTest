@@ -55,20 +55,33 @@ function App(): JSX.Element {
       <header>
         <h1>都道府県別の総人口推移グラフ</h1>
       </header>
-      {error != null && <div className="error-message">{error}</div>}
+      {error != null && (
+        <div className="error-message" data-testid="error-message">
+          {error}
+        </div>
+      )}
       <main>
         <div className="margin-bottom-20">
+          {prefecturePopulations == null && error == null && (
+            <div className="loading" data-testid="population-loading" />
+          )}
           {prefecturePopulations != null && (
-            <PopulationGraph prefecturePopulations={prefecturePopulations} prefectures={prefectures} />
+            <div data-testid="population-graph">
+              <PopulationGraph prefecturePopulations={prefecturePopulations} prefectures={prefectures} />
+            </div>
           )}
         </div>
-        {(prefectures === undefined || prefectures.length === 0) && <div className="loading" />}
+        {(prefectures === undefined || prefectures.length === 0) && error == null && (
+          <div className="loading" data-testid="prefecture-loading" />
+        )}
         {!(prefectures === undefined || prefectures.length === 0) && (
-          <PrefectureCheckBoxList
-            prefectures={prefectures}
-            selectedPrefectures={selectedPrefectures}
-            setSelectedPrefectures={setSelectedPrefectures}
-          />
+          <div data-testid="prefecture-list">
+            <PrefectureCheckBoxList
+              prefectures={prefectures}
+              selectedPrefectures={selectedPrefectures}
+              setSelectedPrefectures={setSelectedPrefectures}
+            />
+          </div>
         )}
       </main>
     </div>

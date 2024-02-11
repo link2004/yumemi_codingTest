@@ -52,7 +52,7 @@ export const fetchPrefecturePopulation = async (prefCode: number): Promise<Prefe
     };
     return data;
   } catch (error) {
-    throw new Error(`データの取得に失敗しました。${String(error)}`);
+    throw new Error(`人口構成データの取得に失敗しました。${String(error)}`);
   }
 };
 
