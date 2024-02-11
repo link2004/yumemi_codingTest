@@ -1,4 +1,11 @@
 import './loading.css';
-export default function Loading(): JSX.Element {
-  return <div className="loading" data-testid="population-loading" />;
+
+interface LoadingProps {
+  'data-testid': string;
 }
+
+const loading = ({ 'data-testid': testId }: LoadingProps): JSX.Element => {
+  return <div className="loading" data-testid={testId} />;
+};
+
+export default loading;

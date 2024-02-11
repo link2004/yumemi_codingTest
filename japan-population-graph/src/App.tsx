@@ -6,6 +6,7 @@ import PopulationGraph from './components/templetes/populationGraph';
 import ErrorAlert from './components/templetes/errorAlert';
 import { usePrefectures } from './hooks/usePrefectures';
 import { usePrefecturePopulations } from './hooks/usePrefecturePopulations';
+import Loading from './components/parts/loading';
 
 function App(): JSX.Element {
   const [selectedPrefectures, setSelectedPrefectures] = useState<Prefecture[]>([]);
@@ -20,9 +21,7 @@ function App(): JSX.Element {
       <ErrorAlert populationsError={populationsError} prefectureError={prefectureError} />
       <main>
         <div className="margin-bottom-20">
-          {prefecturePopulations == null && populationsError == null && (
-            <div className="loading" data-testid="population-loading" />
-          )}
+          {prefecturePopulations == null && populationsError == null && <Loading data-testid="population-loading" />}
           {prefecturePopulations != null && (
             <div data-testid="population-graph">
               <PopulationGraph prefecturePopulations={prefecturePopulations} prefectures={prefectures} />
@@ -30,7 +29,7 @@ function App(): JSX.Element {
           )}
         </div>
         {(prefectures === undefined || prefectures.length === 0) && prefectureError == null && (
-          <div className="loading" data-testid="prefecture-loading" />
+          <Loading data-testid="prefecture-loading" />
         )}
         {!(prefectures === undefined || prefectures.length === 0) && (
           <div data-testid="prefecture-list">
