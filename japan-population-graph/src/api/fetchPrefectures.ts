@@ -34,7 +34,7 @@ export const fetchPrefectures = async (): Promise<PrefecturesResponse> => {
     }
     return data;
   } catch (error) {
-    throw new Error(`データの取得に失敗しました。${String(error)}`);
+    throw new Error(`都道府県データの取得に失敗しました。${String(error)}`);
   }
 };
 
