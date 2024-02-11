@@ -74,7 +74,10 @@ https://thriving-tulumba-552515.netlify.app/
 - fetchmockによるテストコード作成
     
     [非同期リクエストを扱うコンポーネントのテスト：fetch そのものをモック、実装編](https://zenn.dev/tkdn/books/react-testing-patterns/viewer/testing-with-fetchmock)
-    
+
+- CSSの基礎
+
+    [CSS の構造 - ウェブ開発を学ぶ | MDN](https://developer.mozilla.org/ja/docs/Learn/CSS/First_steps/How_CSS_is_structured)  
 
 ## AIを利用した場合成果
 
