@@ -2,6 +2,7 @@ import './prefectureCheckBoxList.css';
 import React from 'react';
 import { type Prefecture } from '../../api/fetchPrefectures';
 import Checkbox from '../parts/checkbox';
+import { usePrefectureSelection } from './hooks/usePrefectureSelection';
 
 interface PrefectureListProps {
   prefectures: Prefecture[];
@@ -16,19 +17,11 @@ const PrefectureList: React.FC<PrefectureListProps> = (props) => {
     setSelectedPrefectures: _setSelectedPrefectures,
   } = props;
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const { checked, value } = event.target;
-    const prefecture = _prefectures.find((p) => p.prefCode.toString() === value);
-    if (prefecture === undefined) {
-      return;
-    }
-    if (checked) {
-      _setSelectedPrefectures([..._selectedPrefectures, prefecture]);
-    } else {
-      const newSelectedPrefectures = _selectedPrefectures.filter((p) => p.prefCode !== prefecture.prefCode);
-      _setSelectedPrefectures(newSelectedPrefectures);
-    }
-  };
+  const handleCheckboxChange = usePrefectureSelection({
+    prefectures: _prefectures,
+    selectedPrefectures: _selectedPrefectures,
+    setSelectedPrefectures: _setSelectedPrefectures,
+  });
 
   return (
     <div className="prefectureList">
