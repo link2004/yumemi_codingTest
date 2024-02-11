@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { type Prefecture } from './api/fetchPrefectures';
 import PrefectureCheckBoxList from './parts/prefectureCheckBoxList';
 import PopulationGraph from './parts/populationGraph';
+import ErrorAlert from './parts/errorAlert';
 import { usePrefectures } from './hooks/usePrefectures';
 import { usePrefecturePopulations } from './hooks/usePrefecturePopulations';
 
@@ -16,11 +17,7 @@ function App(): JSX.Element {
       <header>
         <h1>都道府県別の総人口推移グラフ</h1>
       </header>
-      {(populationsError != null || prefectureError != null) && (
-        <div className="error-message" data-testid="error-message">
-          {populationsError ?? prefectureError}
-        </div>
-      )}
+      <ErrorAlert populationsError={populationsError} prefectureError={prefectureError} />
       <main>
         <div className="margin-bottom-20">
           {prefecturePopulations == null && populationsError == null && (
