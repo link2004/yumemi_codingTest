@@ -1,6 +1,7 @@
 import './prefectureCheckBoxList.css';
 import React from 'react';
 import { type Prefecture } from '../api/fetchPrefectures';
+import Checkbox from '../parts/checkbox';
 
 interface PrefectureListProps {
   prefectures: Prefecture[];
@@ -13,16 +14,14 @@ const PrefectureList: React.FC<PrefectureListProps> = (props) => {
     prefectures: _prefectures,
     selectedPrefectures: _selectedPrefectures,
     setSelectedPrefectures: _setSelectedPrefectures,
-  } = props; // Add this line to destructure the prefectures prop
+  } = props;
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { checked, value } = event.target;
     const prefecture = _prefectures.find((p) => p.prefCode.toString() === value);
     if (prefecture === undefined) {
-      console.log('prefecture code:' + value + 'is not found');
       return;
     }
-
     if (checked) {
       _setSelectedPrefectures([..._selectedPrefectures, prefecture]);
     } else {
@@ -37,12 +36,12 @@ const PrefectureList: React.FC<PrefectureListProps> = (props) => {
         (
           prefecture: Prefecture, // Add the type annotation for the prefecture parameter
         ) => (
-          <div key={prefecture.prefCode} className="prefectureItem">
-            <label>
-              <input type="checkbox" onChange={handleCheckboxChange} value={prefecture.prefCode} />
-              {prefecture.prefName}
-            </label>
-          </div>
+          <Checkbox
+            key={prefecture.prefCode}
+            label={prefecture.prefName}
+            value={prefecture.prefCode}
+            handleCheckboxChange={handleCheckboxChange}
+          />
         ),
       )}
     </div>
