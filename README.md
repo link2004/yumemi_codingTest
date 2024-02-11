@@ -76,7 +76,7 @@ https://thriving-tulumba-552515.netlify.app/
     [非同期リクエストを扱うコンポーネントのテスト：fetch そのものをモック、実装編](https://zenn.dev/tkdn/books/react-testing-patterns/viewer/testing-with-fetchmock)
     
 
-## AIを利用した場合成果があれば簡潔なレポート（ボーナス要素）
+## AIを利用した場合成果
 
 Github Copilotを活用して開発を行いました。
 
