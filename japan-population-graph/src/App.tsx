@@ -1,9 +1,9 @@
 import './App.css';
 import React, { useState } from 'react';
 import { type Prefecture } from './api/fetchPrefectures';
-import PrefectureCheckBoxList from './components/organisms/prefectureCheckBoxList';
-import PopulationGraph from './components/organisms/populationGraph';
-import ErrorAlert from './components/organisms/errorAlert';
+import PrefectureCheckBoxList from './components/templetes/prefectureCheckBoxList';
+import PopulationGraph from './components/templetes/populationGraph';
+import ErrorAlert from './components/templetes/errorAlert';
 import { usePrefectures } from './hooks/usePrefectures';
 import { usePrefecturePopulations } from './hooks/usePrefecturePopulations';
 
