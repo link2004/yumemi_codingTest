@@ -1,4 +1,5 @@
 import React from 'react';
+import './errorAlert.css';
 
 interface errorAlertProps {
   populationsError: string | null;
