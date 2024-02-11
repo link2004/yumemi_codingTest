@@ -25,18 +25,14 @@ const PrefectureList: React.FC<PrefectureListProps> = (props) => {
 
   return (
     <div className="prefectureList">
-      {_prefectures.map(
-        (
-          prefecture: Prefecture, // Add the type annotation for the prefecture parameter
-        ) => (
-          <Checkbox
-            key={prefecture.prefCode}
-            label={prefecture.prefName}
-            value={prefecture.prefCode}
-            handleCheckboxChange={handleCheckboxChange}
-          />
-        ),
-      )}
+      {_prefectures.map((prefecture: Prefecture) => (
+        <Checkbox
+          key={prefecture.prefCode}
+          label={prefecture.prefName}
+          value={prefecture.prefCode}
+          handleCheckboxChange={handleCheckboxChange}
+        />
+      ))}
     </div>
   );
 };
