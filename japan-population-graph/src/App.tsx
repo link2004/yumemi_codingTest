@@ -13,6 +13,11 @@ function App(): JSX.Element {
   const { prefectures, error: prefectureError } = usePrefectures();
   const { prefecturePopulations, error: populationsError } = usePrefecturePopulations(selectedPrefectures, prefectures);
 
+  const isLoadingPrefectures = (prefectures == null || prefectures.length === 0) && prefectureError == null;
+  const isLoadingPopulations = prefecturePopulations == null && populationsError == null;
+  const isLoadedPrefectures = prefectures != null && prefectures.length > 0;
+  const isLoadedPopulations = prefecturePopulations != null && prefecturePopulations.length > 0;
+
   return (
     <div className="App">
       <header>
@@ -20,18 +25,18 @@ function App(): JSX.Element {
       </header>
       <ErrorAlert populationsError={populationsError} prefectureError={prefectureError} />
       <main>
+        {/* グラフ */}
         <div className="margin-bottom-20">
-          {prefecturePopulations == null && populationsError == null && <Loading data-testid="population-loading" />}
-          {prefecturePopulations != null && (
+          {isLoadingPopulations && <Loading data-testid="population-loading" />}
+          {isLoadedPopulations && (
             <div data-testid="population-graph">
               <PopulationGraph prefecturePopulations={prefecturePopulations} prefectures={prefectures} />
             </div>
           )}
         </div>
-        {(prefectures === undefined || prefectures.length === 0) && prefectureError == null && (
-          <Loading data-testid="prefecture-loading" />
-        )}
-        {!(prefectures === undefined || prefectures.length === 0) && (
+        {/* 都道府県選択 */}
+        {isLoadingPrefectures && <Loading data-testid="prefecture-loading" />}
+        {isLoadedPrefectures && (
           <div data-testid="prefecture-list">
             <PrefectureCheckBoxList
               prefectures={prefectures}
