@@ -27,3 +27,31 @@ exports[`App snapshot App 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`render: App snapshot App 1`] = `
+<DocumentFragment>
+  <div
+    class="App"
+  >
+    <header>
+      <h1>
+        都道府県別の総人口推移グラフ
+      </h1>
+    </header>
+    <main>
+      <div
+        class="margin-bottom-20"
+      >
+        <div
+          class="loading"
+          data-testid="population-loading"
+        />
+      </div>
+      <div
+        class="loading"
+        data-testid="prefecture-loading"
+      />
+    </main>
+  </div>
+</DocumentFragment>
+`;

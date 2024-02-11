@@ -70,6 +70,11 @@ describe('API:fetchPrefectures', () => {
     );
     await expect(fetchPrefectures()).rejects.toThrow('都道府県データの取得に失敗しました。Error: 400: error message');
   });
+
+  test('Network error', async () => {
+    global.fetch = jest.fn().mockImplementation(async () => await Promise.reject(new TypeError('Failed to fetch')));
+    await expect(fetchPrefectures()).rejects.toThrow('都道府県データの取得に失敗しました。TypeError: Failed to fetch');
+  });
 });
 
 // 都道府県コードから名前を取得する関数 getPrefectureName();
@@ -123,6 +128,12 @@ describe('API:fetchPrefecturePopulation', () => {
       '人口構成データの取得に失敗しました。Error: 400: error message',
     );
   });
+  test('Network error', async () => {
+    global.fetch = jest.fn().mockImplementation(async () => await Promise.reject(new TypeError('Failed to fetch')));
+    await expect(fetchPrefecturePopulation(1)).rejects.toThrow(
+      '人口構成データの取得に失敗しました。TypeError: Failed to fetch',
+    );
+  });
 });
 
 // 複数の都道府県の人口を取得する関数 (API) fetchPrefecturePopulations();
@@ -161,10 +172,16 @@ describe('API:fetchPrefecturePopulations', () => {
       '人口構成データの取得に失敗しました。Error: 400: error message',
     );
   });
+  test('Network error', async () => {
+    global.fetch = jest.fn().mockImplementation(async () => await Promise.reject(new TypeError('Failed to fetch')));
+    await expect(fetchPrefecturePopulations([1, 2])).rejects.toThrow(
+      '人口構成データの取得に失敗しました。TypeError: Failed to fetch',
+    );
+  });
 });
 
 // Appコンポーネントのテスト
-describe('App', () => {
+describe('render: App', () => {
   test('render: App', () => {
     render(<App />);
     const headerElement = screen.getByRole('heading', { name: '都道府県別の総人口推移グラフ' });
@@ -174,7 +191,7 @@ describe('App', () => {
     const { asFragment } = render(<App />);
     expect(asFragment()).toMatchSnapshot();
   });
-  describe('prefecture', () => {
+  describe('render: prefecture', () => {
     test('render: loading', () => {
       global.fetch = jest.fn().mockResolvedValueOnce(
         Promise.resolve({
@@ -231,7 +248,7 @@ describe('App', () => {
       expect(errorElement).toHaveTextContent('都道府県データの取得に失敗しました。TypeError: Failed to fetch');
     });
   });
-  describe('population-graph', () => {
+  describe('render: population-graph', () => {
     test('render: loading', () => {
       global.fetch = jest
         .fn()
